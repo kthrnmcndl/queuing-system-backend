@@ -5,6 +5,7 @@ use Core\Router;
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: *");
 
 const BASE_PATH = __DIR__ . "/../";
 
@@ -15,6 +16,8 @@ spl_autoload_register(function ($class) {
 
     require base_path("{$class}.php");
 });
+
+$config = require base_path('config.php');
 
 $router = new Router();
 //echo ("this is the index.php file");
