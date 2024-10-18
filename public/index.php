@@ -1,11 +1,13 @@
 <?php
 
+
 use Core\Router;
 
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: *");
+header("Access-Control-Max-Age: 3600");
 
 const BASE_PATH = __DIR__ . "/../";
 
@@ -17,6 +19,7 @@ spl_autoload_register(function ($class) {
     require base_path("{$class}.php");
 });
 
+require base_path('vendor/autoload.php');
 $config = require base_path('config.php');
 
 $router = new Router();

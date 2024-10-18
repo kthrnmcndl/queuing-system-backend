@@ -19,6 +19,11 @@ class Database
     ]);
   }
 
+  public function getConnection(): ?PDO
+  {
+    return $this->connection;
+  }
+
   public function query($query, $params = []): static
   {
     $this->statement = $this->connection->prepare($query);
