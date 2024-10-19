@@ -5,8 +5,9 @@ global $config;
 use \Core\Database;
 use Firebase\JWT\JWT;
 
+
 //JWT
-$secret_key = "";
+$secret_key = $config['secret_key'];
 $issuer_claim = "queuing-server";
 $audience_claim = "queuing-system";
 $issuedAt_claim = time();
@@ -29,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     'username' => $username,
     'password' => $password,
   ])->find();
+
 
 $permissionsArray = explode(',', $user['permissions']);
 
