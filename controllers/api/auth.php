@@ -15,7 +15,6 @@ $notBefore_claim = $issuedAt_claim + 10;
 $expire_claim = $issuedAt_claim + 3600;
 
 $db = new Database($config['database']);
-$message = '';
 
 //Process POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -24,17 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
   $password = $_POST['password'];
 
 //Check if username and password exists in the database
-  $query = "SELECT * FROM users WHERE username = :username AND password = :password LIMIT 1";
+  $query = "SELECT * FROM users WHERE username = :username LIMIT 1";
 
   $user = $db->query($query,[
     'username' => $username,
-    'password' => $password,
   ])->find();
 
+  if (strval($user['password']) === strval($password)){
+    $permissionsArray = explode(',', $user['permissions']);
 
-$permissionsArray = explode(',', $user['permissions']);
-
-  if ($user){
     $token = [
       'iss' => $issuer_claim,
       'aud' => $audience_claim,
@@ -59,7 +56,7 @@ $permissionsArray = explode(',', $user['permissions']);
   }else {
     http_response_code(404);
 
-    $message = "User not found!";
+    $message = "Wrong password.";
     echo json_encode($message);
   }
 }
