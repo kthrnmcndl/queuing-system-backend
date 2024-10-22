@@ -1,7 +1,7 @@
 <?php
 
-return [
-  '/' => 'controllers/index.php',
-  '/api/auth' => 'controllers/api/auth.php',
-  '/api/user' => 'controllers/api/user.php',
-];
+global $router;
+
+$router->get('/', 'controllers/index.php');
+$router->post('/api/auth', 'controllers/api/auth.php');
+$router->get('/api/user', 'controllers/api/user.php');

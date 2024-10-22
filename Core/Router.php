@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Router
 {
   protected array $routes = [];
@@ -25,15 +27,17 @@ class Router
     $this->add('POST', $uri, $controller);
   }
 
-  public function route($uri, $routes)
+  public function route($uri, $method)
   {
-    if (array_key_exists($uri, $routes)) {
-      return require base_path($routes[$uri]);
-    } else {
-      abort(404);
+    foreach ($this->routes as $route){
+      if ($route['uri'] === $uri   && $route['method'] === strtoupper($method)){
+        return require base_path($route['controller']);
+      }
     }
+    return null;
   }
 
+  #[NoReturn]
   public function abort($code = 404)
   {
     http_response_code($code);
